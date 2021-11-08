@@ -29,10 +29,10 @@ class TableViewSet(ModelViewSet):
         return queryset
 
 
-class TableWithUsersViewSet(ModelViewSet):
-    queryset = Table.objects.all().order_by('-date')
-    serializer_class = TableWithUsersSerializer
-    filterset_class = TableFilter
+# class TableWithUsersViewSet(ModelViewSet):
+#     queryset = Table.objects.all().order_by('-date')
+#     serializer_class = TableWithUsersSerializer
+#     filterset_class = TableFilter
 
     # def get_queryset(self):
     #     user = self.request.user

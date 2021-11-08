@@ -24,9 +24,13 @@ class App extends React.Component {
             'errorMessage': '',
             'tables': [],
             'tableEntries': [],
+            'users': [],
         }
     }
 
+    createTable(name, users, date) {
+        console.log(name, users, date)
+    }
 
     getToken(username, password) {
         axios.post('http://127.0.0.1:8000/api-token-auth/', { username: username, password: password })
@@ -46,6 +50,7 @@ class App extends React.Component {
             .then(response => {
                 const loginId = response.data[0].pk
                 localStorage.setItem('loginId', loginId)
+                localStorage.setItem('loggedUser', (response.data[0].first_name + " " + response.data[0].last_name))
             }).catch(error => console.log(error))
     }
 
@@ -83,6 +88,15 @@ class App extends React.Component {
                     }
                 )
             }).catch(error => console.log(error))
+        axios.get('http://127.0.0.1:8000/api/users', { 'headers': headers })
+            .then(response => {
+                const users = response.data
+                this.setState(
+                    {
+                        'users': users
+                    }
+                )
+            }).catch(error => console.log(error))
     };
 
 
@@ -107,7 +121,9 @@ class App extends React.Component {
                         </ul>
                     </nav>
                     <Switch>
-                        <Route path='/' exact component={() => <TablesList tables={this.state.tables} />} />
+                        <Route path='/' exact component={() => <TablesList tables={this.state.tables}
+                            users={this.state.users}
+                            createTable={(name, users, date) => this.createTable(name, users, date)} />} />
                         {this.isAuthenticated() ?
                             <Redirect from='/login' to='/' />
                             :
@@ -115,8 +131,7 @@ class App extends React.Component {
                                 getToken={(username, password) => this.getToken(username, password)} />} />
                         }
                         <Redirect from='/users' to='/' />
-                        <Route path='/table/:id' component={() => <TableEntriesV2 loginId={this.state.loginId}
-                            tables={this.state.tables} />} />
+                        <Route path='/table/:id' component={() => <TableEntriesV2 tables={this.state.tables} />} />
                         <Route component={NotFound404} />
                     </Switch>
                 </BrowserRouter>

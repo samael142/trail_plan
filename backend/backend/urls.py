@@ -16,12 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from mainapp.views import TableViewSet, TableEntryViewSet, FriendViewSet, UserViewSet, TableWithUsersViewSet
+from mainapp.views import TableViewSet, TableEntryViewSet, FriendViewSet, UserViewSet
 from rest_framework.authtoken import views
 
 router = DefaultRouter()
 router.register('tables', TableViewSet, basename='Table')
-router.register('table_with_users', TableWithUsersViewSet, basename='Table_with_users')
+# router.register('table_with_users', TableWithUsersViewSet, basename='Table_with_users')
 router.register('table_entries', TableEntryViewSet)
 router.register('friends', FriendViewSet)
 router.register('users', UserViewSet)
