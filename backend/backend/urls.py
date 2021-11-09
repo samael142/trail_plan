@@ -32,5 +32,3 @@ urlpatterns = [
     path('api-token-auth/', views.obtain_auth_token),
     path('api/', include(router.urls)),
 ]
-
-# hello
