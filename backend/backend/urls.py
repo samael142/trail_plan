@@ -21,7 +21,6 @@ from rest_framework.authtoken import views
 
 router = DefaultRouter()
 router.register('tables', TableViewSet, basename='Table')
-# router.register('table_with_users', TableWithUsersViewSet, basename='Table_with_users')
 router.register('table_entries', TableEntryViewSet)
 router.register('friends', FriendViewSet)
 router.register('users', UserViewSet)
